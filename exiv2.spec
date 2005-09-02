@@ -10,7 +10,7 @@ Release:	0.1
 License:	- (enter GPL/GPL v2/LGPL/BSD/BSD-like/other license name here)
 Group:		Applications
 Source0:	http://home.arcor.de/ahuggel/exiv2/%{name}-%{version}.tar.gz
-# Source0-md5:	-
+# Source0-md5:	540e720b77c05ca50d5005a140e38138
 URL:		http://home.arcor.de/ahuggel/exiv2/
 BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
