@@ -1,9 +1,5 @@
-#
-# Conditional build:
-%bcond_with	tests		# build with tests
-%bcond_without	tests		# build without tests
-#
 Summary:	Exif and Iptc metadata manipulation tools
+Summary(pl):	Narzêdzia do obróbki metadanych Exif i Iptc
 Name:		exiv2
 Version:	0.7
 Release:	0.1
@@ -16,30 +12,45 @@ BuildRequires:	libstdc++-devel
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Exif and Iptc metadata manipulation library and tools.
+Exif and Iptc metadata manipulation tools.
+
+%description -l pl
+Narzêdzia do obróbki metadanych Exif i Iptc.
 
 %package libs
 Summary:	Exif and Iptc metadata manipulation library
+Summary(pl):	Biblioteka do obróbki metadanych Exif i Iptc
 Group:		Libraries
 
 %description libs
 Exif and Iptc metadata manipulation library.
 
+%description libs -l pl
+Biblioteka do obróbki metadanych Exif i Iptc.
+
 %package devel
 Summary:	Exif and Iptc metadata manipulation library development files
+Summary(pl):	Pliki programistyczne biblioteki do obróbki metadanych Exif i Iptc
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
 
 %description devel
 Exif and Iptc metadata manipulation library development files.
 
+%description devel -l pl
+Pliki programistyczne biblioteki do obróbki metadanych Exif i Iptc.
+
 %package static
 Summary:	Exif and Iptc metadata manipulation static library
+Summary(pl):	Statyczna biblioteka do obróbki metadanych Exif i Iptc
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
 
 %description static
 Exif and Iptc metadata manipulation static library.
+
+%description static -l pl
+Statyczna biblioteka do obróbki metadanych Exif i Iptc.
 
 %prep
 %setup -q
@@ -67,12 +78,12 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/*so
+%attr(755,root,root) %{_libdir}/*.so
 
 %files devel
 %defattr(644,root,root,755)
-%{_includedir}/%{name}
 %{_libdir}/*.la
+%{_includedir}/%{name}
 
 %files static
 %defattr(644,root,root,755)
