@@ -9,6 +9,7 @@ Source0:	http://home.arcor.de/ahuggel/exiv2/%{name}-%{version}.tar.gz
 # Source0-md5:	540e720b77c05ca50d5005a140e38138
 URL:		http://home.arcor.de/ahuggel/exiv2/
 BuildRequires:	libstdc++-devel
+Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
@@ -32,7 +33,8 @@ Biblioteka do obróbki metadanych Exif i Iptc.
 Summary:	Exif and Iptc metadata manipulation library development files
 Summary(pl):	Pliki programistyczne biblioteki do obróbki metadanych Exif i Iptc
 Group:		Development/Libraries
-Requires:	%{name}-libs = %{epoch}:%{version}-%{release}
+Requires:	%{name}-libs = %{version}-%{release}
+Requires:	libstdc++-devel
 
 %description devel
 Exif and Iptc metadata manipulation library development files.
@@ -44,7 +46,7 @@ Pliki programistyczne biblioteki do obróbki metadanych Exif i Iptc.
 Summary:	Exif and Iptc metadata manipulation static library
 Summary(pl):	Statyczna biblioteka do obróbki metadanych Exif i Iptc
 Group:		Development/Libraries
-Requires:	%{name}-devel = %{epoch}:%{version}-%{release}
+Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Exif and Iptc metadata manipulation static library.
@@ -57,7 +59,9 @@ Statyczna biblioteka do obróbki metadanych Exif i Iptc.
 
 %build
 %configure
-%{__make}
+%{__make} \
+	CFLAGS="%{rpmcflags} -Wall" \
+	CXXFLAGS="%{rpmcxxflags} -Wall"
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -78,13 +82,14 @@ rm -rf $RPM_BUILD_ROOT
 
 %files libs
 %defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/*.so
+%attr(755,root,root) %{_libdir}/libexiv2-*.so
 
 %files devel
 %defattr(644,root,root,755)
-%{_libdir}/*.la
+%attr(755,root,root) %{_libdir}/libexiv2.so
+%{_libdir}/libexiv2.la
 %{_includedir}/%{name}
 
 %files static
 %defattr(644,root,root,755)
-%{_libdir}/*.a
+%{_libdir}/libexiv2.a
