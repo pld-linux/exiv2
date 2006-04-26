@@ -1,13 +1,13 @@
 Summary:	Exif and Iptc metadata manipulation tools
 Summary(pl):	Narzêdzia do obróbki metadanych Exif i Iptc
 Name:		exiv2
-Version:	0.7
+Version:	0.9.1
 Release:	0.1
 License:	GPL v2
 Group:		Applications
-Source0:	http://home.arcor.de/ahuggel/exiv2/%{name}-%{version}.tar.gz
-# Source0-md5:	540e720b77c05ca50d5005a140e38138
-URL:		http://home.arcor.de/ahuggel/exiv2/
+Source0:	http://www.exiv2.org/%{name}-%{version}.tar.gz
+# Source0-md5:	4c6593751368f5e9235d85e0d4058e67
+URL:		http://www.exiv2.org
 BuildRequires:	libstdc++-devel
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -67,9 +67,9 @@ Statyczna biblioteka do obróbki metadanych Exif i Iptc.
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} install \
-	incdir=$RPM_BUILD_ROOT%{_includedir}/exiv2 \
-	libdir=$RPM_BUILD_ROOT%{_libdir} \
-	bindir=$RPM_BUILD_ROOT%{_bindir} \
+	incdir=%{_includedir}/exiv2 \
+	libdir=%{_libdir} \
+	bindir=%{_bindir} \
 	DESTDIR=$RPM_BUILD_ROOT
 
 %clean
@@ -79,6 +79,7 @@ rm -rf $RPM_BUILD_ROOT
 %defattr(644,root,root,755)
 %doc doc/ChangeLog README
 %attr(755,root,root) %{_bindir}/*
+%{_mandir}/man1/*
 
 %files libs
 %defattr(644,root,root,755)
