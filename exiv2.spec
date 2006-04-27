@@ -7,7 +7,7 @@ License:	GPL v2
 Group:		Applications
 Source0:	http://www.exiv2.org/%{name}-%{version}.tar.gz
 # Source0-md5:	4c6593751368f5e9235d85e0d4058e67
-URL:		http://www.exiv2.org
+URL:		http://www.exiv2.org/
 BuildRequires:	libstdc++-devel
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
