@@ -1,0 +1,2 @@
+- 0.11, does not build:
+- hidden symbol `__dso_handle' in /usr/lib/gcc-lib/athlon-pld-linux/3.3.6/crtbegin.o is referenced by DSO
