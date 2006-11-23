@@ -2,7 +2,7 @@ Summary:	Exif and Iptc metadata manipulation tools
 Summary(pl):	Narzêdzia do obróbki metadanych Exif i Iptc
 Name:		exiv2
 Version:	0.11
-Release:	0.1
+Release:	1
 License:	GPL v2+
 Group:		Applications
 Source0:	http://www.exiv2.org/%{name}-%{version}.tar.gz
@@ -90,7 +90,7 @@ rm -rf $RPM_BUILD_ROOT
 %files
 %defattr(644,root,root,755)
 %doc doc/ChangeLog README
-%attr(755,root,root) %{_bindir}/*
+%attr(755,root,root) %{_bindir}/%{name}
 %{_mandir}/man1/*
 
 %files libs
@@ -99,6 +99,7 @@ rm -rf $RPM_BUILD_ROOT
 
 %files devel
 %defattr(644,root,root,755)
+%attr(755,root,root) %{_bindir}/%{name}-config
 %attr(755,root,root) %{_libdir}/libexiv2.so
 %{_libdir}/libexiv2.la
 %{_includedir}/%{name}
