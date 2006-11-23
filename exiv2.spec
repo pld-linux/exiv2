@@ -9,7 +9,6 @@ Source0:	http://www.exiv2.org/%{name}-%{version}.tar.gz
 # Source0-md5:	269ce822946c56549d086f0c08dffc79
 URL:		http://www.exiv2.org/
 BuildRequires:	libstdc++-devel
-BuildRequires:	sed
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
