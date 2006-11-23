@@ -68,8 +68,9 @@ ln -s config/configure.ac .
 %{__libtoolize}
 %{__aclocal}
 %{__autoconf}
-%{__autoheader}
+# don't touch autoheader, config.h.in has been manually modified
 %configure
+
 %{__make} \
 	CFLAGS="%{rpmcflags} -Wall" \
 	CXXFLAGS="%{rpmcxxflags} -Wall"
@@ -101,6 +102,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libexiv2.so
 %{_libdir}/libexiv2.la
 %{_includedir}/%{name}
+%{_pkgconfigdir}/exiv2.pc
 
 %files static
 %defattr(644,root,root,755)
