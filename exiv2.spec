@@ -3,12 +3,16 @@ Summary(pl):	Narzêdzia do obróbki metadanych Exif i Iptc
 Name:		exiv2
 Version:	0.11
 Release:	0.1
-License:	GPL v2
+License:	GPL v2+
 Group:		Applications
 Source0:	http://www.exiv2.org/%{name}-%{version}.tar.gz
 # Source0-md5:	269ce822946c56549d086f0c08dffc79
 URL:		http://www.exiv2.org/
+BuildRequires:	autoconf >= 2.59
+BuildRequires:	automake
 BuildRequires:	libstdc++-devel
+BuildRequires:	libtool >= 2:1.5
+BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
@@ -35,6 +39,7 @@ Summary(pl):	Pliki programistyczne biblioteki do obróbki metadanych Exif i Iptc
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	libstdc++-devel
+Requires:	zlib-devel
 
 %description devel
 Exif and Iptc metadata manipulation library development files.
@@ -57,7 +62,13 @@ Statyczna biblioteka do obróbki metadanych Exif i Iptc.
 %prep
 %setup -q
 
+ln -s config/configure.ac .
+
 %build
+%{__libtoolize}
+%{__aclocal}
+%{__autoconf}
+%{__autoheader}
 %configure
 %{__make} \
 	CFLAGS="%{rpmcflags} -Wall" \
