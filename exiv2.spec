@@ -1,5 +1,5 @@
 Summary:	Exif and Iptc metadata manipulation tools
-Summary(pl):	Narz阣zia do obr骲ki metadanych Exif i Iptc
+Summary(pl.UTF-8):   Narz臋dzia do obr贸bki metadanych Exif i Iptc
 Name:		exiv2
 Version:	0.12
 Release:	1
@@ -19,23 +19,23 @@ BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 %description
 Exif and Iptc metadata manipulation tools.
 
-%description -l pl
-Narz阣zia do obr骲ki metadanych Exif i Iptc.
+%description -l pl.UTF-8
+Narz臋dzia do obr贸bki metadanych Exif i Iptc.
 
 %package libs
 Summary:	Exif and Iptc metadata manipulation library
-Summary(pl):	Biblioteka do obr骲ki metadanych Exif i Iptc
+Summary(pl.UTF-8):   Biblioteka do obr贸bki metadanych Exif i Iptc
 Group:		Libraries
 
 %description libs
 Exif and Iptc metadata manipulation library.
 
-%description libs -l pl
-Biblioteka do obr骲ki metadanych Exif i Iptc.
+%description libs -l pl.UTF-8
+Biblioteka do obr贸bki metadanych Exif i Iptc.
 
 %package devel
 Summary:	Exif and Iptc metadata manipulation library development files
-Summary(pl):	Pliki programistyczne biblioteki do obr骲ki metadanych Exif i Iptc
+Summary(pl.UTF-8):   Pliki programistyczne biblioteki do obr贸bki metadanych Exif i Iptc
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	libstdc++-devel
@@ -44,20 +44,20 @@ Requires:	zlib-devel
 %description devel
 Exif and Iptc metadata manipulation library development files.
 
-%description devel -l pl
-Pliki programistyczne biblioteki do obr骲ki metadanych Exif i Iptc.
+%description devel -l pl.UTF-8
+Pliki programistyczne biblioteki do obr贸bki metadanych Exif i Iptc.
 
 %package static
 Summary:	Exif and Iptc metadata manipulation static library
-Summary(pl):	Statyczna biblioteka do obr骲ki metadanych Exif i Iptc
+Summary(pl.UTF-8):   Statyczna biblioteka do obr贸bki metadanych Exif i Iptc
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
 Exif and Iptc metadata manipulation static library.
 
-%description static -l pl
-Statyczna biblioteka do obr骲ki metadanych Exif i Iptc.
+%description static -l pl.UTF-8
+Statyczna biblioteka do obr贸bki metadanych Exif i Iptc.
 
 %prep
 %setup -q
