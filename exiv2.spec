@@ -1,5 +1,5 @@
 Summary:	Exif and Iptc metadata manipulation tools
-Summary(pl.UTF-8):   Narzędzia do obróbki metadanych Exif i Iptc
+Summary(pl.UTF-8):	Narzędzia do obróbki metadanych Exif i Iptc
 Name:		exiv2
 Version:	0.12
 Release:	1
@@ -24,7 +24,7 @@ Narzędzia do obróbki metadanych Exif i Iptc.
 
 %package libs
 Summary:	Exif and Iptc metadata manipulation library
-Summary(pl.UTF-8):   Biblioteka do obróbki metadanych Exif i Iptc
+Summary(pl.UTF-8):	Biblioteka do obróbki metadanych Exif i Iptc
 Group:		Libraries
 
 %description libs
@@ -35,7 +35,7 @@ Biblioteka do obróbki metadanych Exif i Iptc.
 
 %package devel
 Summary:	Exif and Iptc metadata manipulation library development files
-Summary(pl.UTF-8):   Pliki programistyczne biblioteki do obróbki metadanych Exif i Iptc
+Summary(pl.UTF-8):	Pliki programistyczne biblioteki do obróbki metadanych Exif i Iptc
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	libstdc++-devel
@@ -49,7 +49,7 @@ Pliki programistyczne biblioteki do obróbki metadanych Exif i Iptc.
 
 %package static
 Summary:	Exif and Iptc metadata manipulation static library
-Summary(pl.UTF-8):   Statyczna biblioteka do obróbki metadanych Exif i Iptc
+Summary(pl.UTF-8):	Statyczna biblioteka do obróbki metadanych Exif i Iptc
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
