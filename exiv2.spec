@@ -1,12 +1,12 @@
 Summary:	Exif and Iptc metadata manipulation tools
 Summary(pl.UTF-8):	Narzędzia do obróbki metadanych Exif i Iptc
 Name:		exiv2
-Version:	0.16
+Version:	0.17.1
 Release:	1
 License:	GPL v2+
 Group:		Applications
 Source0:	http://www.exiv2.org/%{name}-%{version}.tar.gz
-# Source0-md5:	a6e72343885d990c593bd013c6c988f1
+# Source0-md5:	52a602f4f0d9e89b7084ac795b7547ac
 Patch0:		%{name}-mkinstalldirs.patch
 URL:		http://www.exiv2.org/
 BuildRequires:	autoconf >= 2.59
