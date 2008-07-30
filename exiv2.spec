@@ -4,7 +4,7 @@ Name:		exiv2
 Version:	0.17.1
 Release:	3
 License:	GPL v2+
-Group:		Applications
+Group:		Applications/Graphics
 Source0:	http://www.exiv2.org/%{name}-%{version}.tar.gz
 # Source0-md5:	52a602f4f0d9e89b7084ac795b7547ac
 Patch0:		%{name}-mkinstalldirs.patch
