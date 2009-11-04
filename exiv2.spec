@@ -12,6 +12,7 @@ Patch1:		%{name}-png_support.patch
 URL:		http://www.exiv2.org/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
+BuildRequires:	expat-devel
 BuildRequires:	gettext-devel
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.0
