@@ -9,6 +9,7 @@ Source0:	http://www.exiv2.org/%{name}-%{version}.tar.gz
 # Source0-md5:	52a602f4f0d9e89b7084ac795b7547ac
 Patch0:		%{name}-mkinstalldirs.patch
 Patch1:		%{name}-png_support.patch
+Patch2:		gcc44.patch
 URL:		http://www.exiv2.org/
 BuildRequires:	autoconf >= 2.59
 BuildRequires:	automake
@@ -67,6 +68,7 @@ Statyczna biblioteka do obróbki metadanych Exif i Iptc.
 %setup -q
 %patch0 -p0
 %patch1 -p1
+%patch2 -p1
 
 ln -s config/configure.ac .
 
