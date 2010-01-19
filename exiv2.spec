@@ -1,5 +1,5 @@
-Summary:	Exif and Iptc metadata manipulation tools
-Summary(pl.UTF-8):	Narzędzia do obróbki metadanych Exif i Iptc
+Summary:	EXIF and IPTC metadata manipulation tools
+Summary(pl.UTF-8):	Narzędzia do obróbki metadanych EXIF i IPTC
 Name:		exiv2
 Version:	0.18.2
 Release:	2
@@ -23,47 +23,47 @@ Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
 
 %description
-Exif and Iptc metadata manipulation tools.
+EXIF and IPTC metadata manipulation tools.
 
 %description -l pl.UTF-8
-Narzędzia do obróbki metadanych Exif i Iptc.
+Narzędzia do obróbki metadanych EXIF i IPTC.
 
 %package libs
-Summary:	Exif and Iptc metadata manipulation library
-Summary(pl.UTF-8):	Biblioteka do obróbki metadanych Exif i Iptc
+Summary:	EXIF and IPTC metadata manipulation library
+Summary(pl.UTF-8):	Biblioteka do obróbki metadanych EXIF i IPTC
 Group:		Libraries
 
 %description libs
-Exif and Iptc metadata manipulation library.
+EXIF and IPTC metadata manipulation library.
 
 %description libs -l pl.UTF-8
-Biblioteka do obróbki metadanych Exif i Iptc.
+Biblioteka do obróbki metadanych EXIF i IPTC.
 
 %package devel
-Summary:	Exif and Iptc metadata manipulation library development files
-Summary(pl.UTF-8):	Pliki programistyczne biblioteki do obróbki metadanych Exif i Iptc
+Summary:	EXIF and IPTC metadata manipulation library development files
+Summary(pl.UTF-8):	Pliki programistyczne biblioteki do obróbki metadanych EXIF i IPTC
 Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 Requires:	libstdc++-devel
 Requires:	zlib-devel
 
 %description devel
-Exif and Iptc metadata manipulation library development files.
+EXIF and IPTC metadata manipulation library development files.
 
 %description devel -l pl.UTF-8
-Pliki programistyczne biblioteki do obróbki metadanych Exif i Iptc.
+Pliki programistyczne biblioteki do obróbki metadanych EXIF i IPTC.
 
 %package static
-Summary:	Exif and Iptc metadata manipulation static library
-Summary(pl.UTF-8):	Statyczna biblioteka do obróbki metadanych Exif i Iptc
+Summary:	EXIF and IPTC metadata manipulation static library
+Summary(pl.UTF-8):	Statyczna biblioteka do obróbki metadanych EXIF i IPTC
 Group:		Development/Libraries
 Requires:	%{name}-devel = %{version}-%{release}
 
 %description static
-Exif and Iptc metadata manipulation static library.
+EXIF and IPTC metadata manipulation static library.
 
 %description static -l pl.UTF-8
-Statyczna biblioteka do obróbki metadanych Exif i Iptc.
+Statyczna biblioteka do obróbki metadanych EXIF i IPTC.
 
 %prep
 %setup -q
