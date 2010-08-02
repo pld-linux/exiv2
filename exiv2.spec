@@ -1,12 +1,12 @@
 Summary:	EXIF and IPTC metadata manipulation tools
 Summary(pl.UTF-8):	Narzędzia do obróbki metadanych EXIF i IPTC
 Name:		exiv2
-Version:	0.18.2
-Release:	2
+Version:	0.20
+Release:	1
 License:	GPL v2+
 Group:		Applications/Graphics
 Source0:	http://www.exiv2.org/%{name}-%{version}.tar.gz
-# Source0-md5:	300cc55e098d7ff7560b4c6992282c53
+# Source0-md5:	3173d08a4313dc94b7bd1b7cdbda2093
 Patch0:		%{name}-mkinstalldirs.patch
 Patch1:		%{name}-png_support.patch
 Patch2:		gcc44.patch
@@ -111,7 +111,7 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libexiv2.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libexiv2.so.5
+%attr(755,root,root) %ghost %{_libdir}/libexiv2.so.9
 
 %files devel
 %defattr(644,root,root,755)
