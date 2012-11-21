@@ -10,7 +10,7 @@ Source0:	http://www.exiv2.org/%{name}-%{version}.tar.gz
 Patch0:		%{name}-mkinstalldirs.patch
 Patch1:		%{name}-png_support.patch
 URL:		http://www.exiv2.org/
-BuildRequires:	autoconf >= 2.59
+BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
 BuildRequires:	expat-devel
 BuildRequires:	gettext-devel
