@@ -14,7 +14,7 @@ URL:		http://www.exiv2.org/
 BuildRequires:	autoconf >= 2.61
 BuildRequires:	automake
 BuildRequires:	expat-devel
-BuildRequires:	gettext-devel
+BuildRequires:	gettext-tools
 BuildRequires:	libstdc++-devel
 BuildRequires:	libtool >= 2:2.0
 BuildRequires:	zlib-devel
