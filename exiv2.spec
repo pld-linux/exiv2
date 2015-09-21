@@ -2,7 +2,7 @@ Summary:	EXIF and IPTC metadata manipulation tools
 Summary(pl.UTF-8):	Narzędzia do obróbki metadanych EXIF i IPTC
 Name:		exiv2
 Version:	0.24
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications/Graphics
 #Source0Download: http://www.exiv2.org/download.html
