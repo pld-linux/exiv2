@@ -114,6 +114,8 @@ rm -rf $RPM_BUILD_ROOT
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libexiv2.la
 # let rpm autodetect dependencies
 chmod 755 $RPM_BUILD_ROOT%{_libdir}/libexiv2.so*
+# samples (exifprint, exiv2json) are not installed, so don't package man
+%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/exiv2samples.1
 
 %find_lang %{name}
 
