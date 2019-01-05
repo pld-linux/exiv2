@@ -1,29 +1,26 @@
 #
 # Conditional build:
-%bcond_with	curl	# enable webready with HTTP support via curl
-%bcond_with	libssh	# enable webready with SSH support via libssh
+%bcond_with	curl		# enable webready with HTTP support via curl
+%bcond_with	libssh		# enable webready with SSH support via libssh
+%bcond_without	static_libs	# static library
 
 Summary:	EXIF and IPTC metadata manipulation tools
 Summary(pl.UTF-8):	Narzędzia do obróbki metadanych EXIF i IPTC
 Name:		exiv2
-Version:	0.26
+Version:	0.27.0a
 Release:	1
 License:	GPL v2+
 Group:		Applications/Graphics
 #Source0Download: http://www.exiv2.org/download.html
-Source0:	http://www.exiv2.org/builds/%{name}-%{version}-trunk.tar.gz
-# Source0-md5:	5399e3b570d7f9205f0e76d47582da4c
-Patch0:		%{name}-mkinstalldirs.patch
-Patch1:		%{name}-png_support.patch
+Source0:	http://www.exiv2.org/builds/%{name}-%{version}-Source.tar.gz
+# Source0-md5:	b7f49949deafa96a9e6a22d42bd91031
 URL:		http://www.exiv2.org/
-BuildRequires:	autoconf >= 2.61
-BuildRequires:	automake
+BuildRequires:	cmake >= 3.3.2
 %{?with_curl:BuildRequires:	curl-devel}
 BuildRequires:	expat-devel
 BuildRequires:	gettext-tools
 %{?with_libssh:BuildRequires:	libssh-devel}
 BuildRequires:	libstdc++-devel
-BuildRequires:	libtool >= 2:2.0
 BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -75,47 +72,54 @@ EXIF and IPTC metadata manipulation static library.
 Statyczna biblioteka do obróbki metadanych EXIF i IPTC.
 
 %prep
-%setup -q -n %{name}-trunk
-%patch0 -p0
-%patch1 -p1
-
-ln -s config/configure.ac .
-
-# AX_CXX_CHECK_FLAG from old autoconf-archive, missing in acinclude or separate file
-tail -n +10113 config/aclocal.m4 >> acinclude.m4
+%setup -q -n %{name}-0.27.0-Source
 
 %build
-%{__libtoolize} --install
-%{__aclocal}
-%{__autoconf}
-# don't touch autoheader, config.h.in has been manually modified
-%configure \
-	--enable-video \
+%if %{with static_libs}
+install -d build-static
+cd build-static
+%cmake .. \
+	-DBUILD_SHARED_LIBS=OFF \
+	-DEXIV2_BUILD_PO=ON \
+	-DEXIV2_BUILD_SAMPLES=OFF \
+	%{?with_curl:-DEXIV2_ENABLE_CURL=ON} \
+	%{?with_libssh:-DEXIV2_ENABLE_SSH=ON} \
+	-DEXIV2_ENABLE_VIDEO=ON \
 %if %{with curl} || %{with libssh}
-	--enable-webready \
-	%{!?with_curl:--without-curl} \
-	%{!?with_libssh:--without-ssh}
+	-DEXIV2_ENABLE_WEBREADY=ON
 %endif
 
-%{__make} \
-	CFLAGS="%{rpmcflags} -Wall" \
-	CXXFLAGS="%{rpmcxxflags} -Wall"
+%{__make}
+cd ..
+%endif
+
+install -d build
+cd build
+%cmake .. \
+	-DEXIV2_BUILD_PO=ON \
+	-DEXIV2_BUILD_SAMPLES=OFF \
+	%{?with_curl:-DEXIV2_ENABLE_CURL=ON} \
+	%{?with_libssh:-DEXIV2_ENABLE_SSH=ON} \
+	-DEXIV2_ENABLE_VIDEO=ON \
+%if %{with curl} || %{with libssh}
+	-DEXIV2_ENABLE_WEBREADY=ON
+%endif
+
+%{__make}
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
-%{__make} install \
-	incdir=%{_includedir}/exiv2 \
-	libdir=%{_libdir} \
-	bindir=%{_bindir} \
+%if %{with static_libs}
+%{__make} -C build-static install \
+	DESTDIR=$RPM_BUILD_ROOT
+%endif
+
+%{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
 
-# obsoleted by pkg-config
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libexiv2.la
-# let rpm autodetect dependencies
-chmod 755 $RPM_BUILD_ROOT%{_libdir}/libexiv2.so*
-# samples (exifprint, exiv2json) are not installed, so don't package man
-%{__rm} $RPM_BUILD_ROOT%{_mandir}/man1/exiv2samples.1
+# internally used Adobe XMP SDK
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/libxmp.a
 
 %find_lang %{name}
 
@@ -127,21 +131,25 @@ rm -rf $RPM_BUILD_ROOT
 
 %files -f %{name}.lang
 %defattr(644,root,root,755)
-%doc doc/ChangeLog README
-%attr(755,root,root) %{_bindir}/%{name}
+%doc README.md doc/ChangeLog doc/cmd.txt
+%attr(755,root,root) %{_bindir}/exiv2
 %{_mandir}/man1/exiv2.1*
 
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libexiv2.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libexiv2.so.26
+%attr(755,root,root) %ghost %{_libdir}/libexiv2.so.27
 
 %files devel
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libexiv2.so
-%{_includedir}/%{name}
+%{_includedir}/exiv2
 %{_pkgconfigdir}/exiv2.pc
+%dir %{_datadir}/exiv2
+%{_datadir}/exiv2/cmake
 
+%if %{with static_libs}
 %files static
 %defattr(644,root,root,755)
 %{_libdir}/libexiv2.a
+%endif
