@@ -8,7 +8,7 @@ Summary:	EXIF and IPTC metadata manipulation tools
 Summary(pl.UTF-8):	Narzędzia do obróbki metadanych EXIF i IPTC
 Name:		exiv2
 Version:	0.27.0a
-Release:	1
+Release:	2
 License:	GPL v2+
 Group:		Applications/Graphics
 #Source0Download: http://www.exiv2.org/download.html
@@ -120,6 +120,8 @@ rm -rf $RPM_BUILD_ROOT
 
 # internally used Adobe XMP SDK
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libxmp.a
+
+%{__mv} $RPM_BUILD_ROOT%{_datadir}/exiv2/cmake/exiv2Config{-pld,}.cmake
 
 %find_lang %{name}
 
