@@ -2,13 +2,12 @@
 # Conditional build:
 %bcond_with	curl		# enable webready with HTTP support via curl
 %bcond_with	libssh		# enable webready with SSH support via libssh
-%bcond_without	static_libs	# static library
 
 Summary:	EXIF and IPTC metadata manipulation tools
 Summary(pl.UTF-8):	Narzędzia do obróbki metadanych EXIF i IPTC
 Name:		exiv2
 Version:	0.27.0a
-Release:	2
+Release:	3
 License:	GPL v2+
 Group:		Applications/Graphics
 #Source0Download: http://www.exiv2.org/download.html
@@ -59,40 +58,10 @@ EXIF and IPTC metadata manipulation library development files.
 %description devel -l pl.UTF-8
 Pliki programistyczne biblioteki do obróbki metadanych EXIF i IPTC.
 
-%package static
-Summary:	EXIF and IPTC metadata manipulation static library
-Summary(pl.UTF-8):	Statyczna biblioteka do obróbki metadanych EXIF i IPTC
-Group:		Development/Libraries
-Requires:	%{name}-devel = %{version}-%{release}
-
-%description static
-EXIF and IPTC metadata manipulation static library.
-
-%description static -l pl.UTF-8
-Statyczna biblioteka do obróbki metadanych EXIF i IPTC.
-
 %prep
 %setup -q -n %{name}-0.27.0-Source
 
 %build
-%if %{with static_libs}
-install -d build-static
-cd build-static
-%cmake .. \
-	-DBUILD_SHARED_LIBS=OFF \
-	-DEXIV2_BUILD_PO=ON \
-	-DEXIV2_BUILD_SAMPLES=OFF \
-	%{?with_curl:-DEXIV2_ENABLE_CURL=ON} \
-	%{?with_libssh:-DEXIV2_ENABLE_SSH=ON} \
-	-DEXIV2_ENABLE_VIDEO=ON \
-%if %{with curl} || %{with libssh}
-	-DEXIV2_ENABLE_WEBREADY=ON
-%endif
-
-%{__make}
-cd ..
-%endif
-
 install -d build
 cd build
 %cmake .. \
@@ -106,14 +75,24 @@ cd build
 %endif
 
 %{__make}
+cd ..
+
+# Regenerate exiv2Config.cmake without references to libxmp.a
+install -d build-cmake
+cd build-cmake
+%cmake .. \
+	-DEXIV2_BUILD_PO=ON \
+	-DEXIV2_BUILD_SAMPLES=OFF \
+	%{?with_curl:-DEXIV2_ENABLE_CURL=ON} \
+	%{?with_libssh:-DEXIV2_ENABLE_SSH=ON} \
+	-DEXIV2_ENABLE_VIDEO=ON \
+	-DEXIV2_ENABLE_XMP=OFF \
+%if %{with curl} || %{with libssh}
+	-DEXIV2_ENABLE_WEBREADY=ON
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
-
-%if %{with static_libs}
-%{__make} -C build-static install \
-	DESTDIR=$RPM_BUILD_ROOT
-%endif
 
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
@@ -121,7 +100,9 @@ rm -rf $RPM_BUILD_ROOT
 # internally used Adobe XMP SDK
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libxmp.a
 
-%{__mv} $RPM_BUILD_ROOT%{_datadir}/exiv2/cmake/exiv2Config{-pld,}.cmake
+%{__rm} $RPM_BUILD_ROOT%{_datadir}/exiv2/cmake/*.cmake
+cp -p build-cmake/src/CMakeFiles/Export/share/exiv2/cmake/exiv2Config-pld.cmake \
+	$RPM_BUILD_ROOT%{_datadir}/exiv2/cmake/exiv2Config.cmake
 
 %find_lang %{name}
 
@@ -149,9 +130,3 @@ rm -rf $RPM_BUILD_ROOT
 %{_pkgconfigdir}/exiv2.pc
 %dir %{_datadir}/exiv2
 %{_datadir}/exiv2/cmake
-
-%if %{with static_libs}
-%files static
-%defattr(644,root,root,755)
-%{_libdir}/libexiv2.a
-%endif
