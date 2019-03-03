@@ -1,0 +1,54 @@
+diff --git a/cmake/exiv2.pc.in b/cmake/exiv2.pc.in
+index e477696d..9018472b 100644
+--- a/cmake/exiv2.pc.in
++++ b/cmake/exiv2.pc.in
+@@ -1,7 +1,7 @@
+ prefix=@CMAKE_INSTALL_PREFIX@
+ exec_prefix=${prefix}
+-libdir=${prefix}/lib
+-includedir=${prefix}/include
++libdir=${prefix}/@CMAKE_INSTALL_LIBDIR@
++includedir=${prefix}/@CMAKE_INSTALL_INCLUDEDIR@
+ 
+ Name: exiv2
+ Description: @PROJECT_DESCRIPTION@
+diff --git a/src/CMakeLists.txt b/src/CMakeLists.txt
+index ca24006e..ed7f3e1c 100644
+--- a/src/CMakeLists.txt
++++ b/src/CMakeLists.txt
+@@ -6,6 +6,7 @@ if( EXIV2_BUILD_UNIT_TESTS )
+     set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON) # Requires CMake 3.3.3
+ endif()
+ 
++include(CMakePackageConfigHelpers)
+ 
+ include_directories(${CMAKE_CURRENT_BINARY_DIR})
+ 
+@@ -218,6 +206,7 @@ if( ICONV_FOUND )
+     target_link_libraries( exiv2lib PRIVATE Iconv::Iconv )
+ endif()
+ 
++write_basic_package_version_file(exiv2ConfigVersion.cmake COMPATIBILITY ExactVersion)
+ 
+ install(TARGETS exiv2lib EXPORT exiv2Config
+     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
+@@ -225,7 +214,9 @@ install(TARGETS exiv2lib EXPORT exiv2Config
+     ${CMAKE_BINARY_DIR}/exiv2lib_export.h
+     DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/exiv2)
+ 
+-install(EXPORT exiv2Config DESTINATION "share/exiv2/cmake")
++install(EXPORT exiv2Config DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/exiv2")
++
++install(FILES ${CMAKE_CURRENT_BINARY_DIR}/exiv2ConfigVersion.cmake DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/exiv2")
+ 
+ # ******************************************************************************
+ # exiv2 application
+@@ -257,7 +244,7 @@ if(EXIV2_BUILD_EXIV2_COMMAND)
+ 
+     if( EXIV2_ENABLE_NLS )
+         target_link_libraries(exiv2 PRIVATE ${Intl_LIBRARIES})
+-        target_include_directories(exiv2lib PRIVATE ${Intl_INCLUDE_DIRS})
++        target_include_directories(exiv2 PRIVATE ${Intl_INCLUDE_DIRS})
+     endif()
+ 
+     if (USING_CONAN AND WIN32 AND EXISTS ${PROJECT_BINARY_DIR}/conanDlls)

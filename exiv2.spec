@@ -7,12 +7,13 @@ Summary:	EXIF and IPTC metadata manipulation tools
 Summary(pl.UTF-8):	Narzędzia do obróbki metadanych EXIF i IPTC
 Name:		exiv2
 Version:	0.27.0a
-Release:	4
+Release:	5
 License:	GPL v2+
 Group:		Applications/Graphics
 #Source0Download: http://www.exiv2.org/download.html
 Source0:	http://www.exiv2.org/builds/%{name}-%{version}-Source.tar.gz
 # Source0-md5:	b7f49949deafa96a9e6a22d42bd91031
+Patch0:		cmake.patch
 URL:		http://www.exiv2.org/
 BuildRequires:	cmake >= 3.3.2
 %{?with_curl:BuildRequires:	curl-devel}
@@ -60,6 +61,7 @@ Pliki programistyczne biblioteki do obróbki metadanych EXIF i IPTC.
 
 %prep
 %setup -q -n %{name}-0.27.0-Source
+%patch0 -p1
 
 %build
 install -d build
@@ -100,9 +102,9 @@ rm -rf $RPM_BUILD_ROOT
 # internally used Adobe XMP SDK
 %{__rm} $RPM_BUILD_ROOT%{_libdir}/libxmp.a
 
-%{__rm} $RPM_BUILD_ROOT%{_datadir}/exiv2/cmake/*.cmake
-cp -p build-cmake/src/CMakeFiles/Export/share/exiv2/cmake/*.cmake \
-	$RPM_BUILD_ROOT%{_datadir}/exiv2/cmake/
+%{__rm} $RPM_BUILD_ROOT%{_libdir}/cmake/exiv2/exiv2Config{,-pld}.cmake
+cp -p build-cmake/src/CMakeFiles/Export/_usr/%{_lib}/cmake/exiv2/exiv2Config{,-pld}.cmake \
+	$RPM_BUILD_ROOT%{_libdir}/cmake/exiv2/
 
 %find_lang %{name}
 
@@ -128,5 +130,4 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libexiv2.so
 %{_includedir}/exiv2
 %{_pkgconfigdir}/exiv2.pc
-%dir %{_datadir}/exiv2
-%{_datadir}/exiv2/cmake
+%{_libdir}/cmake/exiv2
