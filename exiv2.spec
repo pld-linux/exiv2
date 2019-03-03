@@ -14,6 +14,7 @@ Group:		Applications/Graphics
 Source0:	http://www.exiv2.org/builds/%{name}-%{version}-Source.tar.gz
 # Source0-md5:	b7f49949deafa96a9e6a22d42bd91031
 Patch0:		cmake.patch
+Patch1:		%{name}-no-xmpsdk-install.patch
 URL:		http://www.exiv2.org/
 BuildRequires:	cmake >= 3.3.2
 %{?with_curl:BuildRequires:	curl-devel}
@@ -52,6 +53,7 @@ Requires:	expat-devel
 %{?with_libssh:Requires:	libssh-devel}
 Requires:	libstdc++-devel
 Requires:	zlib-devel
+Obsoletes:	exiv2-static
 
 %description devel
 EXIF and IPTC metadata manipulation library development files.
@@ -62,6 +64,7 @@ Pliki programistyczne biblioteki do obróbki metadanych EXIF i IPTC.
 %prep
 %setup -q -n %{name}-0.27.0-Source
 %patch0 -p1
+%patch1 -p1
 
 %build
 install -d build
@@ -77,34 +80,12 @@ cd build
 %endif
 
 %{__make}
-cd ..
-
-# Regenerate exiv2Config.cmake without references to libxmp.a
-install -d build-cmake
-cd build-cmake
-%cmake .. \
-	-DEXIV2_BUILD_PO=ON \
-	-DEXIV2_BUILD_SAMPLES=OFF \
-	%{?with_curl:-DEXIV2_ENABLE_CURL=ON} \
-	%{?with_libssh:-DEXIV2_ENABLE_SSH=ON} \
-	-DEXIV2_ENABLE_VIDEO=ON \
-	-DEXIV2_ENABLE_XMP=OFF \
-%if %{with curl} || %{with libssh}
-	-DEXIV2_ENABLE_WEBREADY=ON
-%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
 
 %{__make} -C build install \
 	DESTDIR=$RPM_BUILD_ROOT
-
-# internally used Adobe XMP SDK
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/libxmp.a
-
-%{__rm} $RPM_BUILD_ROOT%{_libdir}/cmake/exiv2/exiv2Config{,-pld}.cmake
-cp -p build-cmake/src/CMakeFiles/Export/_usr/%{_lib}/cmake/exiv2/exiv2Config{,-pld}.cmake \
-	$RPM_BUILD_ROOT%{_libdir}/cmake/exiv2/
 
 %find_lang %{name}
 

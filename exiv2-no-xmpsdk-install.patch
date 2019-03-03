@@ -1,0 +1,23 @@
+--- exiv2-0.27.0-Source/xmpsdk/CMakeLists.txt.orig	2018-12-20 14:45:17.000000000 +0100
++++ exiv2-0.27.0-Source/xmpsdk/CMakeLists.txt	2019-03-03 11:01:53.674620695 +0100
+@@ -50,9 +50,3 @@
+ if (BUILD_SHARED_LIBS)
+     set_property(TARGET xmp PROPERTY POSITION_INDEPENDENT_CODE ON)
+ endif()
+-
+-# 1119  Install libxmp.a for use by third party applications (Thanks, Emmanuel)
+-install(TARGETS xmp EXPORT exiv2Config
+-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+-        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+-)
+--- exiv2-0.27.0-Source/src/CMakeLists.txt.orig	2018-12-20 14:45:16.000000000 +0100
++++ exiv2-0.27.0-Source/src/CMakeLists.txt	2019-03-03 13:59:23.100261141 +0100
+@@ -147,7 +147,7 @@
+ target_include_directories(exiv2lib PRIVATE ${ZLIB_INCLUDE_DIR})
+ 
+ if (EXIV2_ENABLE_XMP)
+-    target_link_libraries(exiv2lib PUBLIC xmp)
++    target_link_libraries(exiv2lib PRIVATE xmp)
+ elseif(EXIV2_ENABLE_EXTERNAL_XMP)
+     target_link_libraries(exiv2lib PUBLIC ${XMPSDK_LIBRARY})
+     target_include_directories(exiv2lib PUBLIC ${XMPSDK_INCLUDE_DIR})
