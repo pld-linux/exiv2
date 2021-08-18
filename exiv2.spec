@@ -1,5 +1,6 @@
 #
 # Conditional build:
+%bcond_without	apidocs		# API documentation
 %bcond_with	curl		# enable webready with HTTP support via curl
 %bcond_with	libssh		# enable webready with SSH support via libssh
 
@@ -17,10 +18,13 @@ Patch0:		%{name}-no-xmpsdk-install.patch
 URL:		https://www.exiv2.org/
 BuildRequires:	cmake >= 3.3.2
 %{?with_curl:BuildRequires:	curl-devel}
+%{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	expat-devel
 BuildRequires:	gettext-tools
 %{?with_libssh:BuildRequires:	libssh-devel}
 BuildRequires:	libstdc++-devel
+BuildRequires:	rpm-build >= 4.6
+BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	zlib-devel
 Requires:	%{name}-libs = %{version}-%{release}
 BuildRoot:	%{tmpdir}/%{name}-%{version}-root-%(id -u -n)
@@ -60,6 +64,18 @@ EXIF and IPTC metadata manipulation library development files.
 %description devel -l pl.UTF-8
 Pliki programistyczne biblioteki do obróbki metadanych EXIF i IPTC.
 
+%package apidocs
+Summary:	API documentation for exiv2 library
+Summary(pl.UTF-8):	Dokumentacja API biblioteki exiv2
+Group:		Documentation
+BuildArch:	noarch
+
+%description apidocs
+API documentation for exiv2 library.
+
+%description apidocs -l pl.UTF-8
+Dokumentacja API biblioteki exiv2.
+
 %prep
 %setup -q -n %{name}-%{version}-Source
 %patch0 -p1
@@ -68,6 +84,8 @@ Pliki programistyczne biblioteki do obróbki metadanych EXIF i IPTC.
 install -d build
 cd build
 %cmake .. \
+	-DCMAKE_INSTALL_DOCDIR=%{_docdir}/exiv2 \
+	%{?with_apidocs:-DEXIV2_BUILD_DOC=ON} \
 	-DEXIV2_BUILD_SAMPLES=OFF \
 	-DEXIV2_ENABLE_BMFF=ON \
 	%{?with_curl:-DEXIV2_ENABLE_CURL=ON} \
@@ -79,6 +97,10 @@ cd build
 %endif
 
 %{__make}
+
+%if %{with apidocs}
+%{__make} doc
+%endif
 
 %install
 rm -rf $RPM_BUILD_ROOT
@@ -111,3 +133,9 @@ rm -rf $RPM_BUILD_ROOT
 %{_includedir}/exiv2
 %{_pkgconfigdir}/exiv2.pc
 %{_libdir}/cmake/exiv2
+
+%if %{with apidocs}
+%files apidocs
+%defattr(644,root,root,755)
+%{_docdir}/exiv2
+%endif
