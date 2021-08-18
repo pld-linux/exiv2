@@ -1,12 +1,14 @@
---- exiv2-0.27.1-Source/xmpsdk/CMakeLists.txt.orig	2019-07-24 21:30:12.869482590 +0200
-+++ exiv2-0.27.1-Source/xmpsdk/CMakeLists.txt	2019-07-24 21:31:52.508942797 +0200
-@@ -54,9 +54,3 @@
+We package shared, not static libexiv2 library, so libexiv2-xmp.a is useless.
+--- exiv2-0.27.4-Source/xmpsdk/CMakeLists.txt.orig	2021-08-18 17:34:28.084628433 +0200
++++ exiv2-0.27.4-Source/xmpsdk/CMakeLists.txt	2021-08-18 17:35:29.887626951 +0200
+@@ -48,10 +48,3 @@ endif()
  if (BUILD_SHARED_LIBS)
      set_property(TARGET exiv2-xmp PROPERTY POSITION_INDEPENDENT_CODE ON)
  endif()
 -
--# 1119  Install libxmp.a for use by third party applications (Thanks, Emmanuel)
--install(TARGETS exiv2-xmp EXPORT exiv2Config
--        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
--        ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
+-# The private dependencies of a static library still need to be exported because they are needed to properly link the consumers of the static library.
+-install(TARGETS exiv2-xmp EXPORT exiv2Config	
+-    LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}	
+-    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}	
+-    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 -)
