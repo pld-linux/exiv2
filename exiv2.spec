@@ -69,6 +69,7 @@ install -d build
 cd build
 %cmake .. \
 	-DEXIV2_BUILD_SAMPLES=OFF \
+	-DEXIV2_ENABLE_BMFF=ON \
 	%{?with_curl:-DEXIV2_ENABLE_CURL=ON} \
 	-DEXIV2_ENABLE_NLS=ON \
 	%{?with_libssh:-DEXIV2_ENABLE_SSH=ON} \
