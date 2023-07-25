@@ -7,13 +7,13 @@
 Summary:	EXIF and IPTC metadata manipulation tools
 Summary(pl.UTF-8):	Narzędzia do obróbki metadanych EXIF i IPTC
 Name:		exiv2
-Version:	0.27.6
+Version:	0.28.0
 Release:	1
 License:	GPL v2+
 Group:		Applications/Graphics
 #Source0Download: https://exiv2.org/download.html
 Source0:	https://github.com/Exiv2/exiv2/releases/download/v%{version}/%{name}-%{version}-Source.tar.gz
-# Source0-md5:	837a469b0957df8b657151ffb9449771
+# Source0-md5:	7b53f59708efc7f9840e34503eacb41f
 Patch0:		%{name}-no-xmpsdk-install.patch
 URL:		https://exiv2.org/
 BuildRequires:	cmake >= 3.3.2
@@ -21,6 +21,7 @@ BuildRequires:	cmake >= 3.3.2
 %{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	expat-devel
 BuildRequires:	gettext-tools
+BuildRequires:	inih-c++-devel
 %{?with_libssh:BuildRequires:	libssh-devel}
 BuildRequires:	libstdc++-devel
 BuildRequires:	rpm-build >= 4.6
@@ -53,6 +54,7 @@ Group:		Development/Libraries
 Requires:	%{name}-libs = %{version}-%{release}
 %{?with_curl:Requires:	curl-devel}
 Requires:	expat-devel
+Requires:	inih-c++-devel
 %{?with_libssh:Requires:	libssh-devel}
 Requires:	libstdc++-devel
 Requires:	zlib-devel
@@ -125,7 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 %files libs
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/libexiv2.so.*.*.*
-%attr(755,root,root) %ghost %{_libdir}/libexiv2.so.27
+%attr(755,root,root) %ghost %{_libdir}/libexiv2.so.28
 
 %files devel
 %defattr(644,root,root,755)

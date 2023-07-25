@@ -12,3 +12,13 @@ We package shared, not static libexiv2 library, so libexiv2-xmp.a is useless.
 -    ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}	
 -    RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
 -)
+--- exiv2-0.28.0-Source/src/CMakeLists.txt.orig	2023-05-08 18:01:13.000000000 +0200
++++ exiv2-0.28.0-Source/src/CMakeLists.txt	2023-07-25 21:19:24.740194972 +0200
+@@ -189,7 +189,6 @@ endif()
+ 
+ if (EXIV2_ENABLE_XMP)
+     target_link_libraries(exiv2lib PRIVATE exiv2-xmp)
+-    list(APPEND libs_private_list "exiv2-xmp")
+ elseif(EXIV2_ENABLE_EXTERNAL_XMP)
+     target_link_libraries(exiv2lib PUBLIC ${XMPSDK_LIBRARY})
+     target_include_directories(exiv2lib PUBLIC ${XMPSDK_INCLUDE_DIR})
