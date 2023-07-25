@@ -2,7 +2,6 @@
 # Conditional build:
 %bcond_without	apidocs		# API documentation
 %bcond_with	curl		# enable webready with HTTP support via curl
-%bcond_with	libssh		# enable webready with SSH support via libssh
 
 Summary:	EXIF and IPTC metadata manipulation tools
 Summary(pl.UTF-8):	Narzędzia do obróbki metadanych EXIF i IPTC
@@ -16,14 +15,14 @@ Source0:	https://github.com/Exiv2/exiv2/releases/download/v%{version}/%{name}-%{
 # Source0-md5:	7b53f59708efc7f9840e34503eacb41f
 Patch0:		%{name}-no-xmpsdk-install.patch
 URL:		https://exiv2.org/
-BuildRequires:	cmake >= 3.3.2
+BuildRequires:	cmake >= 3.11.0
 %{?with_curl:BuildRequires:	curl-devel}
 %{?with_apidocs:BuildRequires:	doxygen}
 BuildRequires:	expat-devel
 BuildRequires:	gettext-tools
 BuildRequires:	inih-c++-devel
-%{?with_libssh:BuildRequires:	libssh-devel}
-BuildRequires:	libstdc++-devel
+BuildRequires:	libbrotli-devel
+BuildRequires:	libstdc++-devel >= 6:8
 BuildRequires:	rpm-build >= 4.6
 BuildRequires:	rpmbuild(macros) >= 1.605
 BuildRequires:	zlib-devel
@@ -55,7 +54,6 @@ Requires:	%{name}-libs = %{version}-%{release}
 %{?with_curl:Requires:	curl-devel}
 Requires:	expat-devel
 Requires:	inih-c++-devel
-%{?with_libssh:Requires:	libssh-devel}
 Requires:	libstdc++-devel
 Requires:	zlib-devel
 Obsoletes:	exiv2-static < 0.27.0a-3
@@ -92,11 +90,8 @@ cd build
 	-DEXIV2_ENABLE_BMFF=ON \
 	%{?with_curl:-DEXIV2_ENABLE_CURL=ON} \
 	-DEXIV2_ENABLE_NLS=ON \
-	%{?with_libssh:-DEXIV2_ENABLE_SSH=ON} \
 	-DEXIV2_ENABLE_VIDEO=ON \
-%if %{with curl} || %{with libssh}
-	-DEXIV2_ENABLE_WEBREADY=ON
-%endif
+	%{?with_curl:-DEXIV2_ENABLE_WEBREADY=ON}
 
 %{__make}
 
