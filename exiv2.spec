@@ -6,14 +6,13 @@
 Summary:	EXIF and IPTC metadata manipulation tools
 Summary(pl.UTF-8):	Narzędzia do obróbki metadanych EXIF i IPTC
 Name:		exiv2
-Version:	0.28.0
+Version:	0.28.1
 Release:	1
 License:	GPL v2+
 Group:		Applications/Graphics
 #Source0Download: https://exiv2.org/download.html
-Source0:	https://github.com/Exiv2/exiv2/releases/download/v%{version}/%{name}-%{version}-Source.tar.gz
-# Source0-md5:	7b53f59708efc7f9840e34503eacb41f
-Patch0:		%{name}-no-xmpsdk-install.patch
+Source0:	https://github.com/Exiv2/exiv2/archive/v%{version}/%{name}-%{version}.tar.gz
+# Source0-md5:	c4d05b86bda11c15163903822d0eebfb
 URL:		https://exiv2.org/
 BuildRequires:	cmake >= 3.11.0
 %{?with_curl:BuildRequires:	curl-devel}
@@ -77,8 +76,7 @@ API documentation for exiv2 library.
 Dokumentacja API biblioteki exiv2.
 
 %prep
-%setup -q -n %{name}-%{version}-Source
-%patch0 -p1
+%setup -q
 
 %build
 install -d build
@@ -129,7 +127,7 @@ rm -rf $RPM_BUILD_ROOT
 %attr(755,root,root) %{_libdir}/libexiv2.so
 %{_includedir}/exiv2
 %{_pkgconfigdir}/exiv2.pc
-%{_libdir}/cmake/exiv2
+%{_datadir}/cmake/exiv2
 
 %if %{with apidocs}
 %files apidocs
